@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Juego de Frozen</title>
+  <style>
+    /* Estilos CSS */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eaf2f8;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00bfff;
+    }
+
+    #campo-texto {
+      width: 300px;
+      height: 30px;
+      margin-bottom: 10px;
+    }
+
+    #area-respuestas {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    #elsa-image {
+      width: 200px;
+      height: 300px;
+      margin-bottom: 20px;
+      animation: elsa-animation 2s infinite;
+    }
+
+    @keyframes elsa-animation {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Juego de Frozen</h1>
+
+  <div id="area-respuestas"></div>
+
+  <img src="ruta_a_tu_imagen_elsa1.png" id="elsa-image" alt="Elsa">
+
+  <input type="text" id="campo-texto" placeholder="Escribe aquí">
+
+  <script>
+    // Configuración del chatbot de Elsa
+    const respuestas = {
+      miente: "No, jamás te mentiría.",
+      serio: "Si, en verdad que si.",
+      verdad: "Si, claro que si.",
+      llamas: "Me llamo Elsa, y salgo en la película de Frozen.",
+      amo: "Yo tambien te amo.",
+      quiero: "Yo tambien te quiero mucho.",
+      feliz: "Me alegra mucho, el mejor regalo es tu sonrisa. jijiji.",
+      contenta: "Me alegra mucho, el mejor regalo es tu sonrisa. jijiji.",
+      asustada: "buuu, lo siento. no te asustes yo estoy contigo, y Dios siempre te acompaña.",
+      mal: "ayy amiga, tranquila, dime que pasa, todo estara bien, sonrie, te quiero amiga.",
+      aburrida: "ya te aburriste, juguemos a algo, ¡vale!.",
+      enojada: "tranquila, todo estara bien, ¡sonrie que Dios te ama!.",
+      triste: "Lo siento mucho, ¿puedo ayudarte con algo?, no estes triste, yo estoy contigo.",
+      bien: "Me alegro mucho que estas bien, ¡que tu día te valla de maravilla!.",
+      estás: "Bien, muchas gracias, y tu ¿como estas?.",
+      amarillo: "El color amarillo es el color de los Minios, son chistositos personajes.",
+      negro: "El color negro es un color muy oscuro, me recuerda la noche.",
+      naranja: "El color naranja me recuerda a su fruta, naranja, es muy deliciosa.",
+      plateado: "El color plateado me recuerda las monedas, algunas son de plata.",
+      cafe: "El color cafe me recuerda el chocolate.",
+      morado: "El color morado me recuerda las uvas, chiquitas y ricas uvas.",
+      rojo: "El color rojo es el favorito de las manzanas, y son muy ricas.",
+      rosa: "El color rosa me recuerda a la pantera rosa.",
+      azul: "El color azul es tan lindo como el mar.",
+      blanco: "¡El color blanco es el color de las nubes!.",
+      verde: "El color verde es el color de las hojas de los árboles.",
+      dorado: "El color dorado brilla mucho.",
+      oro: "El oro es muy brillante.",
+      arcoiris: "¡El arcoiris tiene muchos colores!. Son colores muy bonitos.",
+      jugar: "Me gustaria jugar contigo, pero solo puedo platicar contigo.",
+      hora: "No puedo saber la hora, lo siento.",
+      nada: "Gracias.",
+      gracias: "De nada.",
+      oggy: "Oggy es un perrito muy chiquito y chistosito. ¡Ambos perritos son bonitos!. cuentame algo de ti Keila",
+      ogui: "Oggy es un perrito muy chiquito y chistosito. ¡Ambos perritos son bonitos!. cuentame algo de ti Keila",
+      ogie: "Oggy es un perrito muy chiquito y chistosito. ¡Ambos perritos son bonitos!. cuentame algo de ti Keila",
+      huggy: "Oggy es un perrito muy chiquito y chistosito. ¡Ambos perritos son bonitos!. cuentame algo de ti Keila",
+      huggie: "Oggy es un perrito muy chiquito y chistosito. ¡Ambos perritos son bonitos!. cuentame algo de ti Keila",
+      oggie: "Oggy es un perrito muy chiquito y chistosito. ¡Ambos perritos son bonitos!. cuentame algo de ti Keila",
+      winis: "Winis es un perrito muy grande y bonito, ¿como se llama tu otro perrito?",
+      winnie: "Winis es un perrito muy grande y bonito, ¿como se llama tu otro perrito?",
+      winnies: "Winis es un perrito muy grande y bonito, ¿como se llama tu otro perrito?",
+      llamo: "Bonito nombre, ¿Como se llama tu perrito mas grande?",
+      hola: "¡Hola! Soy Elsa, ¿Cómo te llamas?",
+      canción: "¡Claro! Aquí tienes la letra de 'Let It Go': ...",
+      color: "Mis colores favoritos son el azul y el blanco, ¿y los tuyos?",
+      // Agrega más respuestas personalizadas aquí según las preguntas o comandos que esperes
+    };
+
+    // Función para obtener la respuesta de Elsa
+    function obtenerRespuesta(input) {
+      // Convertir la entrada a minúsculas para facilitar la coincidencia
+      const texto = input.toLowerCase();
+
+      // Verificar si hay una respuesta específica para la entrada
+      for (const [clave, respuesta] of Object.entries(respuestas)) {
+        if (texto.includes(clave)) {
+          return respuesta;
+        }
+      }
+
+      return "Lo siento, no puedo entender lo que dices.";
+    }
+
+    // Obtener referencia al campo de entrada de texto, al área de salida de respuestas y a la imagen de Elsa
+    const campoTexto = document.getElementById("campo-texto");
+    const areaRespuestas = document.getElementById("area-respuestas");
+    const elsaImage = document.getElementById("elsa-image");
+
+    // Función para procesar la entrada del usuario y mostrar la respuesta de Elsa
+    function procesarEntrada() {
+      // Obtener el texto ingresado por el usuario
+      const inputUsuario = campoTexto.value;
+
+      // Obtener la respuesta de Elsa
+      const respuestaElsa = obtenerRespuesta(inputUsuario);
+
+      // Mostrar la respuesta de Elsa en el área de respuestas
+      areaRespuestas.innerHTML += "<p><strong>Tú:</strong> " + inputUsuario + "</p>";
+      areaRespuestas.innerHTML += "<p><strong>Elsa:</strong> " + respuestaElsa + "</p>";
+
+      // Cambiar la imagen de Elsa según la respuesta
+      if (respuestaElsa !== "Lo siento, no puedo entender lo que dices.") {
+        elsaImage.src = "ruta_a_tu_imagen_elsa2.png";
+      } else {
+        elsaImage.src = "ruta_a_tu_imagen_elsa1.png";
+        window.location.href = "https://oswild-m.github.io/game/Frozen6.html";
+      }
+
+      // Limpiar el campo de entrada de texto
+      campoTexto.value = "";
+
+      // Reproducir la respuesta de Elsa mediante síntesis de voz
+      const utterance = new SpeechSynthesisUtterance(respuestaElsa);
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Agregar un event listener para procesar la entrada cuando se presione Enter
+    campoTexto.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        procesarEntrada();
+      }
+    });
+
+    // Habilitar el reconocimiento de voz
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "es-ES";
+
+    // Función para manejar los resultados del reconocimiento de voz
+    recognition.onresult = function(event) {
+      const result = event.results[event.results.length - 1][0].transcript;
+      campoTexto.value = result;
+    };
+
+    // Agregar un event listener para iniciar el reconocimiento de voz cuando se haga clic en el campo de texto
+    campoTexto.addEventListener("click", function() {
+      recognition.start();
+    });
+  </script>
+</body>
+</html>
